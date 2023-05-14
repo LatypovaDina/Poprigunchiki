@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:probniy"
         mc:Ignorable="d"
         Title="Авторизация" Height="450" Width="800" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800">
+    <Window.Resources>
+        <Style x:Key="NullImage" TargetType="Image">
+            <Setter Property="Source" Value="https://aelektro.ru/images/nofoto.png"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="89*"/>
@@ -19,13 +24,13 @@
         </Grid.ColumnDefinitions>
         <TextBox x:Name="poisk" TextChanged="poisk_TextChanged" HorizontalAlignment="Left" Height="34" Margin="42,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.792,1.191"/>
         <ComboBox x:Name="sort" HorizontalAlignment="Left" Height="34" Margin="260,49,0,0" VerticalAlignment="Top" Width="204" Grid.ColumnSpan="2">
-            <ComboBoxItem Content="Скидка" Selected="ComboBoxItem_Selected_2"></ComboBoxItem>
+            <ComboBoxItem Content="По возрастанию" Selected="ComboBoxItem_Selected_2"></ComboBoxItem>
+            <ComboBoxItem Content="По убыванию" Selected="ComboBoxItem_Selected_3"></ComboBoxItem>
+        </ComboBox>
+        <ComboBox x:Name="typee" DisplayMemberPath="TypeName" SelectionChanged="typee_SelectionChanged"  HorizontalAlignment="Left" Height="36" Margin="77,47,0,0" VerticalAlignment="Top" Width="209" Grid.ColumnSpan="2" Grid.Column="1">
 
-            <ComboBoxItem Content="Приоритет" Selected="ComboBoxItem_Selected_3"></ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="typee" DisplayMemberPath="AgentType" SelectionChanged="ComboBoxItem_Selected" HorizontalAlignment="Left" Height="36" Margin="77,47,0,0" VerticalAlignment="Top" Width="209" Grid.ColumnSpan="2" Grid.Column="1">
-        </ComboBox>
-        <DataGrid MouseDoubleClick="agents_MouseDoubleClick" x:Name="agents" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="227" Margin="42,18,0,0" VerticalAlignment="Top" Width="358" Grid.Row="1"/>
+        <DataGrid x:Name="agents" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="227" Margin="42,18,0,0" VerticalAlignment="Top" Width="358" Grid.Row="1"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="4,95,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="Name" TextChanged="Name_TextChanged" HorizontalAlignment="Left" Margin="12,95,0,0" Text="{Binding SelectedItem.AgentName, ElementName=agents}" VerticalAlignment="Top" Width="144" Height="26" Grid.Column="2" Grid.Row="1"/>
         <Label Content="Количество продаж" HorizontalAlignment="Center"  Margin="0,126,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
@@ -36,8 +41,12 @@
         <TextBox x:Name="phone" Text="{Binding SelectedItem.AgentPhone, ElementName=agents}" HorizontalAlignment="Left" Margin="12,188,0,0"  VerticalAlignment="Top" Width="144" Height="26" Grid.Column="2" Grid.Row="1"/>
         <Label Content="Тип агента" HorizontalAlignment="Left" Margin="4,219,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="type" Text="{Binding SelectedItem.AgentType, ElementName=agents}" HorizontalAlignment="Left" Margin="12,219,0,0" VerticalAlignment="Top" Width="144" Height="26" Grid.Column="2" Grid.Row="1"/>
-        <Image x:Name="logo" Source="{Binding}" HorizontalAlignment="Left" Height="72" Margin="53,10,0,0" VerticalAlignment="Top" Width="90" Grid.Column="2" Grid.Row="1"/>
+        <Image x:Name="logo" Source="{Binding ProductPhotoFromResources}" HorizontalAlignment="Left" Height="72" Margin="53,10,0,0" VerticalAlignment="Top" Width="90" Grid.Column="2" Grid.Row="1"/>
         <Button x:Name="redaktir" Grid.Column="2" Content="Добавить" HorizontalAlignment="Left" Margin="10,264,0,0" Grid.Row="1" VerticalAlignment="Top" Height="36" Width="144" Click="redaktir_Click"/>
+        <Label Content="Поиск по названию/почте/тел." HorizontalAlignment="Left" Margin="52,16,0,0" VerticalAlignment="Top"/>
+        <Label Content="Сортировка по скидкам" HorizontalAlignment="Left" Margin="260,16,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Сортировка по типу" HorizontalAlignment="Left" Margin="81,16,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="202"/>
+        <Button x:Name="clear" Click="clear_Click" Grid.Column="1" Content="Очистить поля" HorizontalAlignment="Center" Height="36" Margin="0,264,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109"/>
 
 
     </Grid>

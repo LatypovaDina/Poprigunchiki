@@ -15,32 +15,23 @@ namespace probniy
 		{
 			InitializeComponent();
 			agents.ItemsSource = db.Agents.ToList();
-			typee.ItemsSource = db.Agents.ToList();
-			//typee.ItemsSource += "Все типы";
+			typee.ItemsSource = db.Types.ToList();
 		}
-
+		/// <summary>
+		/// обработка поиска по названию
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void poisk_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			using (PoprigunEntities1 db = new PoprigunEntities1())
 			{
-				//agents.ItemsSource = db.Agents.Where(x => x.AgentName == poisk.Text || x.AgentEmail == poisk.Text || x.AgentPhone == poisk.Text).ToList();
 				agents.ItemsSource = db.Agents.ToList().Where(c => c.AgentName.Contains(poisk.Text) || c.AgentEmail.Contains(poisk.Text) || c.AgentPhone.Contains(poisk.Text));
 				if (poisk.Text == "все")
 				{
 					agents.ItemsSource = db.Agents.ToList();
 				}	
 			}
-		}
-
-		private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
-		{
-			var item = db.Agents.ToList().Where(x => x.AgentType == typee.SelectedItem.ToString());
-			agents.ItemsSource = db.Agents.ToList().Where(x => x.AgentType == typee.SelectedItem.ToString());
-		}
-
-		private void ComboBoxItem_Selected_1(object sender, RoutedEventArgs e)
-		{
-
 		}
 
 		private void ComboBoxItem_Selected_2(object sender, RoutedEventArgs e)
@@ -51,11 +42,6 @@ namespace probniy
 		private void ComboBoxItem_Selected_3(object sender, RoutedEventArgs e)
 		{
 			
-		}
-
-		private void agents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			//kolVO.Text = db.ProductSale.FirstOrDefault(x => x.ProductCount)
 		}
 
 		private void redaktir_Click(object sender, RoutedEventArgs e)
@@ -84,16 +70,30 @@ namespace probniy
 				red.typee.Text = ret.AgentType.ToString();
 				red.@new.Content = "Сохранить данные";
 			}	
-
 		}
-
 		private void Name_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			if (Name.Text != null)
 			{
 				redaktir.Content = "Редактировать";
 			}
-			else { redaktir.Content = "Добавить"; }
+			else 
+			{ redaktir.Content = "Добавить"; }
+		}
+
+		private void clear_Click(object sender, RoutedEventArgs e)
+		{
+			Name.Clear();
+			kolVO.Clear();
+			skidon.Clear();
+			phone.Clear();
+			type.Clear();
+			redaktir.Content = "Добавить";
+		}
+
+		private void typee_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			agents.ItemsSource = db.Agents.Where(x => x.AgentType == typee.SelectedItem.ToString()).ToList(); 
 		}
 	}
 }

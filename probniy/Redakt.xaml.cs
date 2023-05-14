@@ -26,9 +26,13 @@ namespace probniy
 		{
 			InitializeComponent();
 			this.agent1 = agent1;
-			typee.ItemsSource = db.Agents.ToList();
+			typee.ItemsSource = db.Types.ToList();
 		}
-
+		public void Update()
+		{
+			MainWindow mw = new MainWindow();
+			mw.agents.ItemsSource = db.Agents.ToList();
+		}
 		private void new_Click(object sender, RoutedEventArgs e)
 		{
 			using (PoprigunEntities1 db = new PoprigunEntities1())
@@ -37,8 +41,8 @@ namespace probniy
 				{
 					Agents ag = new Agents { AgentType = typee.Text.ToString(), AgentName = Name.Text, AgentEmail = email.Text, AgentPhone = phone.Text, AgentLogo = null, AgentAddress = adrs.Text, AgentPrioritet = Convert.ToInt32(prior.Text), Director = director.Text, AgentINN = INN.Text, AgentKPP = KPP.Text };
 					db.Agents.Add(ag);
-					
 					db.SaveChanges();
+					Update();
 				}
 				else if (@new.Content == "Сохранить данные")
 				{
@@ -56,8 +60,10 @@ namespace probniy
 
 					db.Agents.AddOrUpdate(agent);
 					db.SaveChanges();
+					Update();
 				}
 				MessageBox.Show("Успешно");
+
 			}
         }
 
@@ -65,10 +71,9 @@ namespace probniy
 		{
 			var deleted = db.Agents.ToList().FirstOrDefault(x => x.AgentName==Name.Text);
 			db.Agents.Remove(deleted);
-				db.SaveChanges();
-
-				MessageBox.Show("Агент удален");
-			
+			db.SaveChanges();
+			Update();
+			MessageBox.Show("Агент удален");
 		}
 
 		private void exit_Click(object sender, RoutedEventArgs e)
@@ -76,7 +81,6 @@ namespace probniy
 			MainWindow mw = new MainWindow();
 			mw.Show();
 			this.Close();
-			mw.agents.ItemsSource = db.Agents.ToList();
 		}
 	}
 }
